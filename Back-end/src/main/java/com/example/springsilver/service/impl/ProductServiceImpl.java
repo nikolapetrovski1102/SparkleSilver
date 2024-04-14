@@ -39,17 +39,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> save(String name, String description, float price, Long categoryId) {
+    public Optional<Product> save(String name, String description, float price, Long categoryId, Long quantity) {
         Category category=this.categoryRepository.findById(categoryId).orElseThrow(()->new CategoryNotFoundException(categoryId));
 
         this.productRepository.deleteByName(name);
-        Product product=new Product(name,description,price,category);
+        Product product=new Product(quantity, name, description, price,category);
         this.productRepository.save(product);
         return Optional.of(product);
     }
 
     @Override
-    public Optional<Product> edit(Long id, String name, String description, float price, Long categoryId) {
+    public Optional<Product> edit(Long id,String name,String description, float price, Long categoryId, Long quantity) {
         Product product=this.productRepository.findById(id).orElseThrow(()->new ProductNotFoundException(id));
 
         product.setPrice(price);

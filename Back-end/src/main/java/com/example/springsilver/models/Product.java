@@ -2,9 +2,11 @@ package com.example.springsilver.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "Product")
 public class Product {
 
@@ -12,8 +14,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long productId;
-
-
+    private Long quantity;
     //Dodadeno name na productot
     //TODO Izmeni ja bazata
     private String name;
@@ -25,8 +26,9 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    public Product(String name,String description, float price, Category category) {
-        this.name=name;
+    public Product(Long quantity, String name, String description, float price, Category category) {
+        this.quantity = quantity;
+        this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
