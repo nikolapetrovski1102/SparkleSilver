@@ -14,8 +14,8 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OrderItem_Id")
     private Long OrderItem_Id;
-    private Long quantity;
-    private Double price;
+    private int quantity;
+    private float price;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -25,7 +25,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Orders order;
 
-    public OrderItem(Long quantity, Double price, Product product) {
+    public OrderItem(int quantity, float price, Product product) {
         this.quantity = quantity;
         this.price = price;
         this.product = product;
