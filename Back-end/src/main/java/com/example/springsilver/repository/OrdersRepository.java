@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
-    Optional<Orders> findByOrder_date(LocalDate date);
+    Optional<Orders> findByOrderDate(LocalDate orderDate);
 }

@@ -21,7 +21,7 @@ public class Orders {
     private Long orders_id;
 
     @Column(name = "order_date")
-    private LocalDate order_date;
+    private LocalDate orderDate;
     private Double total_price;
 
     @OneToMany
@@ -42,7 +42,7 @@ public class Orders {
     }
 
     public Orders(Payment payment, Shipping shipping) {
-        this.order_date = LocalDate.now();
+        this.orderDate = LocalDate.now();
         this.payment = payment;
         this.shipping = shipping;
         this.order_items = new ArrayList<OrderItem>();

@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
-    Optional<Payment> findByPayment_date(LocalDate date);
+    Optional<Payment> findByPaymentDate(LocalDate paymentDate);
 }

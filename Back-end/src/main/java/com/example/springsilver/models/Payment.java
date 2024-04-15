@@ -20,7 +20,7 @@ public class Payment {
     private Long payment_id;
 
     @Column(name = "payment_date")
-    private LocalDate payment_date;
+    private LocalDate paymentDate;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
@@ -29,7 +29,7 @@ public class Payment {
 
     public Payment(LocalDate payment_date, PaymentMethod paymentMethod, Double amount) {
 
-        this.payment_date = payment_date;
+        this.paymentDate = payment_date;
         this.paymentMethod = paymentMethod;
         this.amount = amount;
     }
