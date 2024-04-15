@@ -2,6 +2,7 @@ package com.example.springsilver.service;
 
 import com.example.springsilver.models.Category;
 import com.example.springsilver.models.Product;
+import com.example.springsilver.models.dto.ProductDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,9 @@ public interface ProductService {
     Optional<Product> findByName(String name);
     Optional<Product> findById(Long id);
     Optional<Product> save(String name, String description, float price, Long categoryId, Long quantity);
+    Optional<Product> save(ProductDto productDto);
     Optional<Product> edit(Long id,String name,String description, float price, Long categoryId, Long quantity);
+    Optional<Product> edit(Long id,ProductDto productDto);
 
     void deleteById(Long id);
 

@@ -24,6 +24,7 @@ public class Product {
 
     //Mozebi treba column name ovde?
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public Product(Long quantity, String name, String description, float price, Category category) {
