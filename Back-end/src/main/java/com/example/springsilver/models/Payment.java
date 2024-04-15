@@ -18,6 +18,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
     private Long payment_id;
+
+    @Column(name = "payment_date")
     private LocalDate payment_date;
 
     @Enumerated(EnumType.STRING)

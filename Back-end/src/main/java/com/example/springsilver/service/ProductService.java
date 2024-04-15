@@ -3,6 +3,7 @@ package com.example.springsilver.service;
 import com.example.springsilver.models.Category;
 import com.example.springsilver.models.Product;
 import com.example.springsilver.models.dto.ProductDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

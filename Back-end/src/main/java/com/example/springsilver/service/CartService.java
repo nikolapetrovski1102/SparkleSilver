@@ -2,6 +2,7 @@ package com.example.springsilver.service;
 
 import com.example.springsilver.models.Cart;
 import com.example.springsilver.models.OrderItem;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

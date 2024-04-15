@@ -15,10 +15,12 @@ import java.util.List;
 public class Users {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    //Dodadeno username da bide kluc vo tabelata
-    private String username;
+    private Long id;
 
+    @Column(name = "username")
+    private String username;
     private String first_name;
     private String last_name;
     private String email;

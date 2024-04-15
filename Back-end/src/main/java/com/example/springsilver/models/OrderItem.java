@@ -12,7 +12,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "OrderItem_Id")
+    @Column(name = "order_item_Id")
     private Long OrderItem_Id;
     private int quantity;
     private float price;

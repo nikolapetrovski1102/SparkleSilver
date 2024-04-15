@@ -2,6 +2,7 @@ package com.example.springsilver.service;
 
 import com.example.springsilver.models.Users;
 import com.example.springsilver.models.enumeration.UserRoles;
+import org.springframework.stereotype.Service;
 
 public interface UserService {
 
