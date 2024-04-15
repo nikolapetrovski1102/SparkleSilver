@@ -29,6 +29,7 @@ public class OrderItem {
         this.quantity = quantity;
         this.price = price;
         this.product = product;
+        //order=null?
     }
 
 }
