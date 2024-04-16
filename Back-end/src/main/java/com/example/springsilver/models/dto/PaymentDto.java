@@ -10,6 +10,9 @@ public class PaymentDto {
     private String paymentMethod;
     private Double amount;
 
+    public PaymentDto() {
+    }
+
     public PaymentDto(LocalDate paymentDate, String paymentMethod, Double amount) {
         this.paymentDate = paymentDate;
         this.paymentMethod = paymentMethod;

@@ -15,6 +15,9 @@ public class OrdersDto {
     private Long payment;
     private Long shipping;
 
+    public OrdersDto() {
+    }
+
     public OrdersDto(LocalDate orderDate, Double total_price, List<Long> order_items, Long payment, Long shipping) {
         this.orderDate = orderDate;
         this.total_price = total_price;
