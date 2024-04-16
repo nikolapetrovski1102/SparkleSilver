@@ -24,17 +24,16 @@ public class CartServiceImpl implements CartService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public CartServiceImpl(ProductRepository productRepository,ShoppingCartRepository shoppingCartRepository, OrderItemRepository orderItemRepository, UserRepository userRepository) {
+    public CartServiceImpl(ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, OrderItemRepository orderItemRepository, UserRepository userRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.orderItemRepository = orderItemRepository;
         this.userRepository = userRepository;
-        this.productRepository=productRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public List<OrderItem> listAllProductInCart(Long cartId) {
-        if(!this.shoppingCartRepository.findById(cartId).isPresent())
-        {
+        if (!this.shoppingCartRepository.findById(cartId).isPresent()) {
             throw new ShoppingCartNotFoundException(cartId);
         }
         return this.shoppingCartRepository.findById(cartId).get().getOrderItems();
@@ -42,19 +41,17 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart addProductItemToShoppingCart(String username, Long productId, int quantity) {
-        if(username==null || username.isEmpty())
-        {
+        if (username == null || username.isEmpty()) {
             throw new InvalidUserCredentialsException();
         }
-        Users user= (Users) this.userRepository.findByUsername(username).get();
-        Cart cart=this.shoppingCartRepository.findById(user.getCart().getId()).get();
+        Users user = (Users) this.userRepository.findByUsername(username).get();
+        Cart cart = this.shoppingCartRepository.findById(user.getCart().getId()).get();
 
-        if(!productRepository.findById(productId).isPresent())
-        {
+        if (!productRepository.findById(productId).isPresent()) {
             throw new ProductNotFoundException(productId);
         }
-        Product product=productRepository.findById(productId).get();
-        OrderItem orderItem=orderItemRepository.save(new OrderItem(quantity,product.getPrice()*quantity,product));
+        Product product = productRepository.findById(productId).get();
+        OrderItem orderItem = orderItemRepository.save(new OrderItem(quantity, product.getPrice() * quantity, product));
         cart.getOrderItems().add(orderItem);
         return this.shoppingCartRepository.save(cart);
 
