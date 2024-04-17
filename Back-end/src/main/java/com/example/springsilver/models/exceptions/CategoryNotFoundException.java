@@ -9,4 +9,11 @@ public class CategoryNotFoundException extends RuntimeException{
     public CategoryNotFoundException(Long id){
         super(String.format("Category with id %d is not found",id));
     }
+
+    public static class CategoryNameNotFoundException extends RuntimeException {
+        public CategoryNameNotFoundException(String message) {
+            super(message);
+        }
+    }
+
 }

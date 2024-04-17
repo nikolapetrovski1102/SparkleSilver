@@ -32,10 +32,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     //find by name
+/*
     @Override
-    public Optional<Category> findByName(String name) {
-        return this.categoryRepository.findByName(name);
+    public Optional<Category> findByName(String categoryName) {
+        return this.categoryRepository.findByName(categoryName);
+    }*/
+
+    @Override
+    public List<Category> listCategories() {
+        return categoryRepository.findAll();
     }
+
+    @Override
+    public List<Category> searchCategories(String searchText) {
+        List<Category> categories = categoryRepository.findAllByCategoryNameLike(searchText);
+        if (categories.isEmpty()) {
+            throw new CategoryNotFoundException.CategoryNameNotFoundException("No categories found for search text: " + searchText);
+        }
+        return categories;
+    }
+
+   /* public List<Category> searchCategories(String searchText) {
+        return categoryRepository.findAllByCategoryNameLike(searchText);
+    }*/
+
 
     //create with Dto
     @Override

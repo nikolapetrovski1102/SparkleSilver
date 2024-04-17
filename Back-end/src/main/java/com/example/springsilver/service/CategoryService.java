@@ -13,7 +13,11 @@ public interface CategoryService {
 
     Optional<Category> findById(Long id);
 
-    Optional<Category> findByName(String name);
+    //Optional<Category> findByName(String categoryName);  //todo
+    List<Category> listCategories();
+
+    List<Category> searchCategories(String searchText);
+
 
     //create with Dto
     Optional<Category> save(CategoryDto categoryDto);

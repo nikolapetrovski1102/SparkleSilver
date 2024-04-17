@@ -20,10 +20,10 @@ public class ProductController {
    @GetMapping
    private List<Product> findAll(){
         return this.productService.findAll();
-    }
+    }  //work
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id){
+    public ResponseEntity<Product> findById(@PathVariable Long id){ //work
          return this.productService.findById(id).map(product -> ResponseEntity.ok().body(product))
                  .orElseGet(()->ResponseEntity.badRequest().build());
     }
@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Product> save(@PathVariable Long id, @RequestBody ProductDto productDto) {
+    public ResponseEntity<Product> edit(@PathVariable Long id, @RequestBody ProductDto productDto) {
         return this.productService.edit(id, productDto)
                 .map(product -> ResponseEntity.ok().body(product))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
