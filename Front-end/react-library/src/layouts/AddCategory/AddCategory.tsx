@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 
-interface Category {
-  categoryId: number;
-  categoryName: string;
-}
 
 const AddCategoryForm: React.FC = () => {
   const [categoryName, setCategoryName] = useState<string>('');
