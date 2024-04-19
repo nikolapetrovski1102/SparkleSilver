@@ -19,14 +19,7 @@ const AddProductForm: React.FC = () => {
           throw new Error('Failed to fetch categories');
         }
         const data: Category[] = await response.json();
-        // Filter categories to only include rings, bracelets, necklaces, and earrings
-        const filteredCategories = data.filter(category => 
-          category.categoryName.toLowerCase() === 'rings' || 
-          category.categoryName.toLowerCase() === 'bracelets' || 
-          category.categoryName.toLowerCase() === 'necklaces' || 
-          category.categoryName.toLowerCase() === 'earrings'
-        );
-        setCategories(filteredCategories);
+        setCategories(data);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -77,39 +70,25 @@ const AddProductForm: React.FC = () => {
       console.error('Error adding product:', error);
     }
   };
-
   return (
-    <div>
-      <h2>Add Product</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Quantity:
-            <input type="number" name="quantity" value={productData.quantity} onChange={handleChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Name:
-            <input type="text" name="name" value={productData.name} onChange={handleChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Description:
-            <textarea name="description" value={productData.description} onChange={handleChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Price:
-            <input type="number" step="0.01" name="price" value={productData.price} onChange={handleChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Category:
-            <select name="category" value={productData.category} onChange={handleCategoryChange}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div style={{ width: '90%', maxWidth: '470px', padding: '20px'}}>
+        <h2 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '30px' }}>Add Product</h2>
+        <form onSubmit={handleSubmit} style={{ display: 'grid', gridGap: '20px' }}> {/* Increased gridGap */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <input type="text" name="name" id="name" value={productData.name} onChange={handleChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px', backgroundColor: '#ffe6e6'  }} placeholder="Name" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <textarea name="description" id="description" value={productData.description} onChange={handleChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px', backgroundColor: '#ffe6e6', minHeight: '100px' }} placeholder="Description" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <input type="number" name="quantity" id="quantity" value={productData.quantity} onChange={handleChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px', backgroundColor: '#ffe6e6'  }} placeholder="Quantity" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <input type="number" step="0.01" name="price" id="price" value={productData.price} onChange={handleChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px',backgroundColor: '#ffe6e6'  }} placeholder="Price" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <select name="category" id="category" value={productData.category} onChange={handleCategoryChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px' , backgroundColor: '#ffe6e6'  }}>
               <option value="">Select Category</option>
               {categories.map((category) => (
                 <option key={category.categoryId} value={category.categoryId}>
@@ -117,12 +96,14 @@ const AddProductForm: React.FC = () => {
                 </option>
               ))}
             </select>
-          </label>
-        </div>
-        <button type="submit">Add Product</button>
-      </form>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#784040', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '16px', cursor: 'pointer', width: '48%' }}>Add Product</button>
+            <button type="button" style={{ padding: '10px 20px', backgroundColor: '#784040', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '16px', cursor: 'pointer', width: '48%' }}>Back</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
-};
-
+}  
 export default AddProductForm;
