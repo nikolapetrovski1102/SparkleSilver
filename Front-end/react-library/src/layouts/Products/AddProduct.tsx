@@ -19,7 +19,14 @@ const AddProductForm: React.FC = () => {
           throw new Error('Failed to fetch categories');
         }
         const data: Category[] = await response.json();
-        setCategories(data);
+        // Filter categories to only include rings, bracelets, necklaces, and earrings
+        const filteredCategories = data.filter(category => 
+          category.categoryName.toLowerCase() === 'rings' || 
+          category.categoryName.toLowerCase() === 'bracelets' || 
+          category.categoryName.toLowerCase() === 'necklaces' || 
+          category.categoryName.toLowerCase() === 'earrings'
+        );
+        setCategories(filteredCategories);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }

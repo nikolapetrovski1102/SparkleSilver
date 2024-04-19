@@ -4,6 +4,7 @@ import { HomePage } from './layouts/HomePage/HomePage';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ProductList from './layouts/Products/ListProducts';
 import AddProductForm from './layouts/Products/AddProduct';
+import AddCategoryForm from './layouts/AddCategory/AddCategory';
 
 
 export const App = () => {
@@ -22,6 +23,9 @@ export const App = () => {
           </Route>
           <Route path='/add-product'>
             <AddProductForm />
+          </Route>
+          <Route path='/add-category'>
+            <AddCategoryForm />
           </Route>
         </Switch>
       </div>
