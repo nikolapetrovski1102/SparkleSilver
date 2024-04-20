@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Category } from '../../Types/types';
+import { NavLink } from "react-router-dom";
 
 const AddProductForm: React.FC = () => {
   const [productData, setProductData] = useState({
@@ -70,6 +71,7 @@ const AddProductForm: React.FC = () => {
       console.error('Error adding product:', error);
     }
   };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div style={{ width: '90%', maxWidth: '470px', padding: '20px'}}>
@@ -98,12 +100,43 @@ const AddProductForm: React.FC = () => {
             </select>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#784040', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '16px', cursor: 'pointer', width: '48%' }}>Add Product</button>
-            <button type="button" style={{ padding: '10px 20px', backgroundColor: '#784040', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '16px', cursor: 'pointer', width: '48%' }}>Back</button>
+            <button
+              type="submit"
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#784040',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '10px',
+                fontSize: '16px',
+                cursor: 'pointer',
+                width: '48%', // Set width to 48%
+              }}
+            >
+              Add Product
+            </button>
+            <NavLink to="/home" style={{ textDecoration: 'none', width: '48%' }}>
+              <button
+                style={{
+                  padding: '10px 0',
+                  backgroundColor: '#784040',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '10px',
+                  fontSize: '16px',
+                  cursor: 'pointer',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                }}
+              >
+                Back
+              </button>
+            </NavLink>
           </div>
         </form>
       </div>
     </div>
   );
-}  
+}
+
 export default AddProductForm;
