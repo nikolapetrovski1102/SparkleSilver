@@ -5,6 +5,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import ProductList from './layouts/Products/ListProducts';
 import AddProductForm from './layouts/Products/AddProduct';
 import AddCategoryForm from './layouts/AddCategory/AddCategory';
+import CreateAccount from './layouts/Auth/CreateAccount';
+import Login from './layouts/Auth/Login';
 
 
 export const App = () => {
@@ -26,6 +28,12 @@ export const App = () => {
           </Route>
           <Route path='/add-category'>
             <AddCategoryForm />
+          </Route>
+          <Route path='/login'>
+            <Login/>
+          </Route>
+          <Route path='/create-account'>
+            <CreateAccount />
           </Route>
         </Switch>
       </div>
