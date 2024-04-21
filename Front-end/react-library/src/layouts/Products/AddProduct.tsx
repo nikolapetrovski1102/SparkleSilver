@@ -9,6 +9,7 @@ const AddProductForm: React.FC = () => {
     description: '',
     price: '',
     category: '',
+    url: '', // New state variable for URL
   });
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -45,6 +46,14 @@ const AddProductForm: React.FC = () => {
     });
   };
 
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for URL input
+    const url = e.target.value;
+    setProductData({
+      ...productData,
+      url: url,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -65,6 +74,7 @@ const AddProductForm: React.FC = () => {
         description: '',
         price: '',
         category: '',
+        url: '', // Reset URL input
       });
       // You can add further handling here, like displaying a success message
     } catch (error) {
@@ -88,6 +98,9 @@ const AddProductForm: React.FC = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <input type="number" step="0.01" name="price" id="price" value={productData.price} onChange={handleChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px',backgroundColor: '#ffe6e6'  }} placeholder="Price" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <input type="text" name="url" id="url" value={productData.url} onChange={handleUrlChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px',backgroundColor: '#ffe6e6'  }} placeholder="URL" /> {/* New URL input field */}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <select name="category" id="category" value={productData.category} onChange={handleCategoryChange} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px' , backgroundColor: '#ffe6e6'  }}>
