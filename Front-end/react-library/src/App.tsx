@@ -9,6 +9,7 @@ import Login from './layouts/Auth/Login';
 import Profile from './layouts/User/Profile'; // Assuming Profile component includes user info
 import HomePage from './layouts/HomePage/HomePage';
 
+
 export const App: React.FC = () => {
   const user = {
     username: 'john_doe',
@@ -43,7 +44,16 @@ export const App: React.FC = () => {
               <HomePage />
             </Route>
             <Route path='/earrings'>
-              <ProductList />
+              <ProductList category="earrings" />
+            </Route>
+            <Route path='/bracelets'>
+              <ProductList category="bracelets" />
+            </Route>
+            <Route path='/necklaces'>
+              <ProductList category="necklaces" />
+            </Route>
+            <Route path='/rings'>
+              <ProductList category="rings" />
             </Route>
             <Route path='/add-product'>
               <AddProductForm />
