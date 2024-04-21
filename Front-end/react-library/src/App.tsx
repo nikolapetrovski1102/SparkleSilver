@@ -18,6 +18,18 @@ export const App: React.FC = () => {
     avatarUrl: 'https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745', // Provide your user's avatar URL
   };
 
+  // Define the onRegister function
+  const handleRegister = (credentials: { username: string, password: string }) => {
+    // Your registration logic here
+    console.log('Registering:', credentials);
+  };
+
+  // Define the onLogin function
+  const handleLogin = () => {
+    // Your login logic here
+    console.log('Logging in');
+  };
+
   return (
     <div className="App">
       <Profile user={user} />
@@ -40,10 +52,10 @@ export const App: React.FC = () => {
               <AddCategoryForm />
             </Route>
             <Route path='/login'>
-              <Login/>
+              <Login onLogin={handleLogin}/> {/* Pass onLogin function */}
             </Route>
             <Route path='/create-account'>
-              <CreateAccount />
+              <CreateAccount onRegister={handleRegister} onLogin={handleLogin}/> {/* Pass onRegister and onLogin functions */}
             </Route>
             <Route path='/profile'>
               <Profile user={user} /> {/* Render Profile component when URL matches '/profile' */}
