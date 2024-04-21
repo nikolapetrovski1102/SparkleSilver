@@ -41,11 +41,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> save(String name, String description, float price, Long categoryId, Long quantity) {
+    public Optional<Product> save(String name, String description, float price, Long categoryId, Long quantity, String imagePathUrl) {
         Category category=this.categoryRepository.findById(categoryId).orElseThrow(()->new CategoryNotFoundException(categoryId));
 
         this.productRepository.deleteByName(name);
-        Product product=new Product(quantity, name, description, price,category);
+        Product product=new Product(quantity, name, description, price,category, imagePathUrl);
         this.productRepository.save(product);
         return Optional.of(product);
     }
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
         Category category = this.categoryRepository.findById(productDto.getCategory())
                 .orElseThrow(() -> new CategoryNotFoundException(productDto.getCategory()));
        // this.productRepository.deleteByName(productDto.getName());
-        Product product = new Product(productDto.getQuantity(),productDto.getName(),productDto.getDescription(), productDto.getPrice(), category);
+        Product product = new Product(productDto.getQuantity(),productDto.getName(),productDto.getDescription(), productDto.getPrice(), category, productDto.getImagePathURL());
         this.productRepository.save(product);
         return Optional.of(product);
     }

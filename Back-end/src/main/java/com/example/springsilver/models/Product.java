@@ -27,11 +27,15 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Product(Long quantity, String name, String description, float price, Category category) {
+    @JoinColumn(name = "image_pathurl")
+    private String imagePathURL;
+
+    public Product(Long quantity, String name, String description, float price, Category category, String imagePathURL) {
         this.quantity = quantity;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
+        this.imagePathURL = imagePathURL;
     }
 }

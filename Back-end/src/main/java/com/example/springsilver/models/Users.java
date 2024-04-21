@@ -37,8 +37,9 @@ public class Users {
     @OneToOne
     private Cart cart;
 
+    private String image_pathurl;
 
-    public Users(String username,UserRoles userRoles, String password, String email, String last_name, String first_name) {
+    public Users(String username,UserRoles userRoles, String password, String email, String last_name, String first_name, String image_pathurl) {
         this.username=username;
         this.userRoles = userRoles;
         this.password = password;
@@ -46,5 +47,6 @@ public class Users {
         this.first_name=first_name;
         this.last_name = last_name;
         this.cart = new Cart();
+        this.image_pathurl = image_pathurl;
     }
 }

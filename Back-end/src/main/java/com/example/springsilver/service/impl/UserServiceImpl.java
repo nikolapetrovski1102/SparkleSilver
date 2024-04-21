@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users register(String username, String first_name, String last_name,String email, String password, String repeatPassword) {
+    public Users register(String username, String first_name, String last_name,String email, String password, String repeatPassword, String image_pathurl) {
         if(username==null || username.isEmpty() || password==null || password.isEmpty())
         {
             throw new InvalidUserCredentialsException();
@@ -32,12 +32,12 @@ public class UserServiceImpl implements UserService {
         {
             throw new UserNameAlreadyExistsException(username);
         }
-        Users user=new Users(username,UserRoles.USER,password,email,last_name,first_name);
+        Users user=new Users(username,UserRoles.USER,password,email,last_name,first_name, image_pathurl);
         return userRepository.save(user);
     }
 
     @Override
-    public Users registerWithRole(String username, String first_name, String last_name, String email,String password, String repeatPassword, UserRoles role) {
+    public Users registerWithRole(String username, String first_name, String last_name, String email,String password, String repeatPassword, UserRoles role, String image_pathurl) {
         if(username==null || username.isEmpty() || password==null || password.isEmpty())
         {
             throw new InvalidUserCredentialsException();
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         {
             throw new UserNameAlreadyExistsException(username);
         }
-        Users user=new Users(username,role,password,email,last_name,first_name);
+        Users user=new Users(username,role,password,email,last_name,first_name, image_pathurl);
         return userRepository.save(user);
     }
 }

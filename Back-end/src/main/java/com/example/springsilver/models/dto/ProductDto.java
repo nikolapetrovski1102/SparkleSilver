@@ -9,15 +9,16 @@ public class ProductDto {
     private String description;
     private float price;
     private Long category;
-
+    private String imagePathURL;
 
     public ProductDto() {}
 
-    public ProductDto(Long quantity, String name, String description, float price, Long category) {
+    public ProductDto(Long quantity, String name, String description, float price, Long category, String imagePathURL) {
         this.quantity = quantity;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
+        this.imagePathURL = imagePathURL;
     }
 }

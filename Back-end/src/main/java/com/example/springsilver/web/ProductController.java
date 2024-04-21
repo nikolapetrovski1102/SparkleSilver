@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
+    String userDirectory = System.getProperty("user.dir");
 
     public ProductController(ProductService productService) {
         this.productService = productService;
