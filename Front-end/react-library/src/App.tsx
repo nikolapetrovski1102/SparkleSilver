@@ -8,6 +8,7 @@ import CreateAccount from './layouts/Auth/CreateAccount';
 import Login from './layouts/Auth/Login';
 import Profile from './layouts/User/Profile'; // Assuming Profile component includes user info
 import HomePage from './layouts/HomePage/HomePage';
+import ProductDetails from './layouts/Products/ProductDetails';
 
 
 export const App: React.FC = () => {
@@ -69,6 +70,9 @@ export const App: React.FC = () => {
             </Route>
             <Route path='/profile'>
               <Profile user={user} /> {/* Render Profile component when URL matches '/profile' */}
+            </Route>
+            <Route path='/product/:productId'> {/* Define route for ProductDetails with productId parameter */}
+              <ProductDetails />
             </Route>
           </Switch>
         </div>
