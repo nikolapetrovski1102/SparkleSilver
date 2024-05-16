@@ -117,7 +117,7 @@ public class UsersController {
         cookie.setMaxAge(24 * 60 * 60);
         cookie.setPath("/");
         cookie.setSecure(true);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         try{
             response.addCookie(cookie);
         }
@@ -136,16 +136,16 @@ public class UsersController {
                 }
             }
         }
-        return "";
+        return "Not authorized";
     }
 
     @GetMapping("/delete")
     public void deleteCookie (HttpServletResponse response){
-        Cookie cookie = new Cookie("user", null);
+        Cookie cookie = new Cookie("session", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
         cookie.setSecure(true);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
 
         response.addCookie(cookie);
     }
