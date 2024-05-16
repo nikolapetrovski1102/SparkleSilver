@@ -51,10 +51,9 @@ public class CartServiceImpl implements CartService {
             throw new ProductNotFoundException(productId);
         }
         Product product = productRepository.findById(productId).get();
-        OrderItem orderItem = orderItemRepository.save(new OrderItem(quantity, product.getPrice() * quantity, product));
+        OrderItem orderItem = orderItemRepository.save(new OrderItem(quantity, product.getPrice() * quantity, productId,null));
         cart.getOrderItems().add(orderItem);
         return this.shoppingCartRepository.save(cart);
-
 
     }
 }

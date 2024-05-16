@@ -2,6 +2,7 @@ package com.example.springsilver.web;
 
 import com.example.springsilver.models.Product;
 import com.example.springsilver.models.dto.ProductDto;
+import com.example.springsilver.service.CartService;
 import com.example.springsilver.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,12 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
+    private final CartService cartService;
     String userDirectory = System.getProperty("user.dir");
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CartService cartService) {
         this.productService = productService;
+        this.cartService = cartService;
     }
 
    @GetMapping
@@ -46,6 +49,13 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteById(@PathVariable Long id) {
         this.productService.deleteById(id);
+        if (this.productService.findById(id).isEmpty()) return ResponseEntity.ok().build();
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/addToCart/{id}")
+    public ResponseEntity addToCart(@PathVariable Long id){
+        this.productService.addToCart(id);
         if (this.productService.findById(id).isEmpty()) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }

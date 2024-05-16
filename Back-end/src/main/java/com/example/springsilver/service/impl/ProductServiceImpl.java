@@ -1,11 +1,11 @@
 package com.example.springsilver.service.impl;
 
-import com.example.springsilver.models.Category;
-import com.example.springsilver.models.Product;
+import com.example.springsilver.models.*;
 import com.example.springsilver.models.dto.ProductDto;
 import com.example.springsilver.models.exceptions.CategoryNotFoundException;
 import com.example.springsilver.models.exceptions.ProductNotFoundException;
 import com.example.springsilver.repository.CategoryRepository;
+import com.example.springsilver.repository.OrderItemRepository;
 import com.example.springsilver.repository.ProductRepository;
 import com.example.springsilver.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, OrderItemRepository orderItemRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -87,6 +89,22 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
 
         this.productRepository.save(product);
+        return Optional.of(product);
+    }
+
+    @Override
+    public Optional<Product> addToCart(Long id) {
+        Product product = this.productRepository.findById(id).orElseThrow(()
+                -> new ProductNotFoundException(id));
+
+        //Orders orders = new Orders();
+        OrderItem orderItem = new OrderItem(1, product.getPrice(), product.getProductId(),null );
+
+        this.orderItemRepository.save(orderItem);
+
+        Cart cart = new Cart();
+        cart.getOrderItems().add(orderItem);
+
         return Optional.of(product);
     }
 
