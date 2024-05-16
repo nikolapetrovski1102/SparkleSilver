@@ -9,6 +9,7 @@ import Login from './layouts/Auth/Login';
 import Profile from './layouts/User/Profile'; // Assuming Profile component includes user info
 import HomePage from './layouts/HomePage/HomePage';
 import ProductDetails from './layouts/Products/ProductDetails';
+import EditProduct from './layouts/Products/EditProduct';
 
 
 export const App: React.FC = () => {
@@ -73,6 +74,9 @@ export const App: React.FC = () => {
             </Route>
             <Route path='/product/:productId'> {/* Define route for ProductDetails with productId parameter */}
               <ProductDetails />
+            </Route>
+            <Route path='/edit/:productId'> {/* Define route for ProductDetails with productId parameter */}
+              <EditProduct />
             </Route>
           </Switch>
         </div>
