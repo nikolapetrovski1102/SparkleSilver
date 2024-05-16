@@ -24,7 +24,7 @@ public class DataInitializer {
     public void initData(){
         if (userRepository.findAll().isEmpty()){
             String encodedPassword = passwordEncoder.encode("admin");
-            Users u1 = new Users("admin", UserRoles.USER.ordinal() + 1, encodedPassword, "nikpetrovski007@gmail.com", null, "Admin", "Admin", "", true);
+            Users u1 = new Users("admin", UserRoles.ADMIN.ordinal() + 1, encodedPassword, "nikpetrovski007@gmail.com", null, "Admin", "Admin", "", true);
 
             userRepository.save(u1);
         }
