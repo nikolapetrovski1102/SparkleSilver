@@ -20,10 +20,8 @@ public class ShippingServiceImpl implements ShippingService {
     }
 
     @Override
-    public Optional<Shipping> save(LocalDate shipment_date, String address) {
-        Shipping shipping=new Shipping(shipment_date,address);
-        this.shippingRepository.save(shipping);
-        return Optional.of(shipping);
+    public Shipping save(Shipping shipping) {
+        return this.shippingRepository.save(shipping);
     }
 
     @Override

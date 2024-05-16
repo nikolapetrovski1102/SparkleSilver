@@ -17,12 +17,12 @@ public class Shipping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shipping_id")
     private Long shipping_id;
-    //Promeneto e imeto od shipment_date vo shipmentDate
+    @Column(name = "shipment_date")
     private LocalDate shipmentDate;
     private String address;
 
-    public Shipping(LocalDate shipment_date, String address) {
-        this.shipmentDate = shipment_date; //dali da ima dva data ? ispr : primanje
+    public Shipping(String address) {
+        this.shipmentDate = LocalDate.now().plusWeeks(1);
         this.address = address;
     }
 }

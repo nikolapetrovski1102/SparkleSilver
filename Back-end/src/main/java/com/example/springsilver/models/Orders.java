@@ -22,12 +22,13 @@ public class Orders {
 
     @Column(name = "order_date")
     private LocalDate orderDate;
-    private Double total_price;
+    @Column(name = "total_price")
+    private float total_price;
 
     @OneToMany
     private List<OrderItem> order_items;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
@@ -41,9 +42,10 @@ public class Orders {
         }
     }
 
-    public Orders(Payment payment, Shipping shipping) {
+    public Orders(Payment payment, float total_price, Shipping shipping) {
         this.orderDate = LocalDate.now();
         this.payment = payment;
+        this.total_price = total_price;
         this.shipping = shipping;
         this.order_items = new ArrayList<OrderItem>();
         Total();

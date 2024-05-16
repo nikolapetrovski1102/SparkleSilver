@@ -19,7 +19,7 @@ public class Cart {
     private Long id;
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -27,14 +27,9 @@ public class Cart {
     @JoinColumn(name = "user_id", nullable = false)
     private Users users;
 
-    @OneToMany
-    @JoinColumn(name = "order_item_id", nullable = true)
-    private List<OrderItem> orderItems;
-
-    public Cart(Integer quantity, Product product, Users users, List<OrderItem> orderItems) {
+    public Cart(Integer quantity, Product product, Users users) {
         this.quantity = quantity;
         this.product = product;
         this.users = users;
-        this.orderItems = orderItems;
     }
 }

@@ -1,8 +1,10 @@
 package com.example.springsilver.models.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ProductDto {
     private Long quantity;
     private String name;
@@ -10,8 +12,6 @@ public class ProductDto {
     private float price;
     private Long category;
     private String imagePathURL;
-
-    public ProductDto() {}
 
     public ProductDto(Long quantity, String name, String description, float price, Long category, String imagePathURL) {
         this.quantity = quantity;

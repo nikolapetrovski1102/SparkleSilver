@@ -53,15 +53,4 @@ public class ProductController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/addToCart/{id}")
-    public ResponseEntity<?> addToCart(@PathVariable Long id, @RequestParam Integer qty, @RequestParam Long userId){
-        this.productService.addToCart(id, qty, userId);
-        if (this.productService.findById(id).isEmpty()) {
-            return ResponseEntity.ok().build();
-        }
-        else{
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
 }

@@ -19,12 +19,9 @@ public class PaymentServiceImpl implements PaymentService {
         this.paymentRepository = paymentRepository;
     }
 
-
-
     @Override
-    public Optional<Payment> save(LocalDate payment_date, PaymentMethod paymentMethod, Double amount) {
-        Payment payment=new Payment(payment_date,paymentMethod,amount);
-        return Optional.of(paymentRepository.save(payment));
+    public Payment save(Payment payment) {
+        return paymentRepository.save(payment);
     }
 
     @Override

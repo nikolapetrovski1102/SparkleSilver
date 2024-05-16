@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         }
         else{
             String encodedPassword = passwordEncoder.encode(password);
-            Users user=new Users(username, UserRoles.USER.ordinal() + 1, encodedPassword, email, null, last_name, first_name, image_pathurl, false);
+            Users user=new Users(username, UserRoles.USER.ordinal() + 1, encodedPassword, email, last_name, first_name, image_pathurl, false);
             return userRepository.save(user);
         }
     }

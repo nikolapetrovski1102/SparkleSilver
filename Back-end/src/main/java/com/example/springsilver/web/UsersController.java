@@ -1,5 +1,6 @@
 package com.example.springsilver.web;
 
+import com.example.springsilver.config.CookieManager;
 import com.example.springsilver.config.Emailer;
 import com.example.springsilver.models.Users;
 import com.example.springsilver.models.dto.UserRegisterDTO;
@@ -19,26 +20,28 @@ public class UsersController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final Emailer emailer;
+    private final CookieManager cookieManager;
 
-    public UsersController(UserService userService, PasswordEncoder passwordEncoder, Emailer emailer) {
+    public UsersController(UserService userService, PasswordEncoder passwordEncoder, Emailer emailer, CookieManager cookieManager) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.emailer = emailer;
+        this.cookieManager = cookieManager;
     }
 
     @PostMapping("/login")
     public ResponseEntity<Users> login (@RequestParam String usernameOrEmail, @RequestParam String password, HttpServletResponse resp, HttpServletRequest req){
 
-        String isAuthorized = checkSession(req);
+        String isAuthorized = cookieManager.checkSession(req);
 
-        if (isAuthorized.isEmpty()) {
+        if (isAuthorized.equals("Not authorized")) {
             Users user = userService.authenticateUser(usernameOrEmail, password);
 
             if (user != null) {
-                setCookie(resp, user.getId().toString());
+                cookieManager.setCookie(resp, user.getId().toString());
                 return ResponseEntity.ok().build();
             } else {
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.notFound().build();
             }
         }
         else{
@@ -50,13 +53,13 @@ public class UsersController {
     @PostMapping("/logout")
     public ResponseEntity<Users> logout (HttpServletResponse resp, HttpServletRequest req){
 
-        String authorized = checkSession(req);
+        String authorized = cookieManager.checkSession(req);
 
-        if (authorized.isEmpty()){
+        if (authorized.equals("Not authorized")){
             return ResponseEntity.badRequest().build();
         }
         else{
-            deleteCookie(resp);
+            cookieManager.deleteCookie(resp);
             return ResponseEntity.ok().build();
         }
 
@@ -109,45 +112,6 @@ public class UsersController {
             return ResponseEntity.internalServerError().build();
         }
 
-    }
-
-    @GetMapping("/setCookie")
-    public void setCookie(HttpServletResponse response, String cookieValue) {
-        Cookie cookie = new Cookie("session", cookieValue);
-        cookie.setMaxAge(24 * 60 * 60);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        cookie.setHttpOnly(false);
-        try{
-            response.addCookie(cookie);
-        }
-        catch (Exception ex){
-            System.out.println(ex.toString());
-        }
-    }
-
-    @GetMapping("/checkSession")
-    public String checkSession(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("session")) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        return "Not authorized";
-    }
-
-    @GetMapping("/delete")
-    public void deleteCookie (HttpServletResponse response){
-        Cookie cookie = new Cookie("session", null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        cookie.setHttpOnly(false);
-
-        response.addCookie(cookie);
     }
 
 }

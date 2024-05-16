@@ -7,6 +7,7 @@ import com.example.springsilver.models.Users;
 import com.example.springsilver.models.exceptions.InvalidUserCredentialsException;
 import com.example.springsilver.models.exceptions.ProductNotFoundException;
 import com.example.springsilver.models.exceptions.ShoppingCartNotFoundException;
+import com.example.springsilver.models.exceptions.UserIdNotFoundException;
 import com.example.springsilver.repository.OrderItemRepository;
 import com.example.springsilver.repository.ProductRepository;
 import com.example.springsilver.repository.ShoppingCartRepository;
@@ -14,7 +15,9 @@ import com.example.springsilver.repository.UserRepository;
 import com.example.springsilver.service.CartService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -32,28 +35,45 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<OrderItem> listAllProductInCart(Long cartId) {
-        if (!this.shoppingCartRepository.findById(cartId).isPresent()) {
-            throw new ShoppingCartNotFoundException(cartId);
+    public List<Product> listAllProductInCart(Long userId) {
+        Users user = userRepository.findUsersById(userId).orElseThrow(UserIdNotFoundException::new);
+
+        List<Cart> cart = shoppingCartRepository.findByUsers(user).stream().toList();
+
+        List<Product> productList = new ArrayList<>();
+
+        if (!cart.isEmpty()) {
+            for (Cart item : cart) {
+                productList.add(item.getProduct());
+            }
         }
-        return this.shoppingCartRepository.findById(cartId).get().getOrderItems();
+
+        return productList;
+
     }
 
     @Override
-    public Cart addProductItemToShoppingCart(String username, Long productId, int quantity) {
-        if (username == null || username.isEmpty()) {
-            throw new InvalidUserCredentialsException();
-        }
-        Users user = (Users) this.userRepository.findByUsername(username).get();
-        Cart cart = this.shoppingCartRepository.findById(user.getId()).get();
+    public void removeFromCart(Long cartId) {
 
-        if (!productRepository.findById(productId).isPresent()) {
-            throw new ProductNotFoundException(productId);
-        }
-        Product product = productRepository.findById(productId).get();
-        OrderItem orderItem = orderItemRepository.save(new OrderItem(quantity, product.getPrice() * quantity, product,null));
-        cart.getOrderItems().add(orderItem);
-        return this.shoppingCartRepository.save(cart);
+        Cart cart = shoppingCartRepository.findCartById(cartId);
 
+        shoppingCartRepository.delete(cart);
+    }
+
+    @Override
+    public Cart addToCart(Long id, Integer qty, Long userId) {
+        Product product = this.productRepository.findById(id).orElseThrow(()
+                -> new ProductNotFoundException(id));
+
+        Users user = this.userRepository.findUsersById(userId).orElseThrow(UserIdNotFoundException::new);
+
+        Cart cart = new Cart(qty, product, user);
+
+        return shoppingCartRepository.save(cart);
+    }
+
+    @Override
+    public Cart getProduct(Long cartId) {
+        return shoppingCartRepository.findCartById(cartId);
     }
 }

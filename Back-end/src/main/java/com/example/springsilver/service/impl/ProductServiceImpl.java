@@ -94,23 +94,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> addToCart(Long id, Integer qty, Long userId) {
-        Product product = this.productRepository.findById(id).orElseThrow(()
-                -> new ProductNotFoundException(id));
-
-        Users user = this.userRepository.findUsersById(userId).orElseThrow(UserIdNotFoundException::new);
-
-        //Orders orders = new Orders();
-//        OrderItem orderItem = new OrderItem(1, product.getPrice(), product,null );
-//
-//        this.orderItemRepository.save(orderItem);
-
-        Cart cart = new Cart(qty, product, user, null);
-
-        return Optional.of(product);
-    }
-
-    @Override
     public void deleteById(Long id) {
         this.productRepository.deleteById(id);
     }

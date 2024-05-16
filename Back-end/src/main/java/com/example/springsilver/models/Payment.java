@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,13 +24,13 @@ public class Payment {
     private LocalDate paymentDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
-    private Double amount;
+    private float amount;
 
-    public Payment(LocalDate payment_date, PaymentMethod paymentMethod, Double amount) {
-
-        this.paymentDate = payment_date;
+    public Payment(PaymentMethod paymentMethod, float amount) {
+        this.paymentDate = LocalDate.now();
         this.paymentMethod = paymentMethod;
         this.amount = amount;
     }
