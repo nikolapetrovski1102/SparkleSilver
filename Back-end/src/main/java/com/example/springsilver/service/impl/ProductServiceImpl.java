@@ -4,9 +4,8 @@ import com.example.springsilver.models.*;
 import com.example.springsilver.models.dto.ProductDto;
 import com.example.springsilver.models.exceptions.CategoryNotFoundException;
 import com.example.springsilver.models.exceptions.ProductNotFoundException;
-import com.example.springsilver.repository.CategoryRepository;
-import com.example.springsilver.repository.OrderItemRepository;
-import com.example.springsilver.repository.ProductRepository;
+import com.example.springsilver.models.exceptions.UserIdNotFoundException;
+import com.example.springsilver.repository.*;
 import com.example.springsilver.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +18,14 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final OrderItemRepository orderItemRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final UserRepository userRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, OrderItemRepository orderItemRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ShoppingCartRepository shoppingCartRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
-        this.orderItemRepository = orderItemRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -93,17 +94,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> addToCart(Long id) {
+    public Optional<Product> addToCart(Long id, Integer qty, Long userId) {
         Product product = this.productRepository.findById(id).orElseThrow(()
                 -> new ProductNotFoundException(id));
 
+        Users user = this.userRepository.findUsersById(userId).orElseThrow(UserIdNotFoundException::new);
+
         //Orders orders = new Orders();
-        OrderItem orderItem = new OrderItem(1, product.getPrice(), product.getProductId(),null );
+//        OrderItem orderItem = new OrderItem(1, product.getPrice(), product,null );
+//
+//        this.orderItemRepository.save(orderItem);
 
-        this.orderItemRepository.save(orderItem);
-
-        Cart cart = new Cart();
-        cart.getOrderItems().add(orderItem);
+        Cart cart = new Cart(qty, product, user, null);
 
         return Optional.of(product);
     }

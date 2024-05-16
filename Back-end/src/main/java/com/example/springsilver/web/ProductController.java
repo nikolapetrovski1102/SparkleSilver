@@ -47,16 +47,21 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         this.productService.deleteById(id);
         if (this.productService.findById(id).isEmpty()) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/addToCart/{id}")
-    public ResponseEntity addToCart(@PathVariable Long id){
-        this.productService.addToCart(id);
-        if (this.productService.findById(id).isEmpty()) return ResponseEntity.ok().build();
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> addToCart(@PathVariable Long id, @RequestParam Integer qty, @RequestParam Long userId){
+        this.productService.addToCart(id, qty, userId);
+        if (this.productService.findById(id).isEmpty()) {
+            return ResponseEntity.ok().build();
+        }
+        else{
+            return ResponseEntity.badRequest().build();
+        }
     }
+
 }

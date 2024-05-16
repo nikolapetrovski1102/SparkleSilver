@@ -45,13 +45,13 @@ public class CartServiceImpl implements CartService {
             throw new InvalidUserCredentialsException();
         }
         Users user = (Users) this.userRepository.findByUsername(username).get();
-        Cart cart = this.shoppingCartRepository.findById(user.getCart().getId()).get();
+        Cart cart = this.shoppingCartRepository.findById(user.getId()).get();
 
         if (!productRepository.findById(productId).isPresent()) {
             throw new ProductNotFoundException(productId);
         }
         Product product = productRepository.findById(productId).get();
-        OrderItem orderItem = orderItemRepository.save(new OrderItem(quantity, product.getPrice() * quantity, productId,null));
+        OrderItem orderItem = orderItemRepository.save(new OrderItem(quantity, product.getPrice() * quantity, product,null));
         cart.getOrderItems().add(orderItem);
         return this.shoppingCartRepository.save(cart);
 

@@ -27,7 +27,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @JoinColumn(name = "image_pathurl")
+    @Column(name = "image_pathurl", nullable = true)
     private String imagePathURL;
 
     public Product(Long quantity, String name, String description, float price, Category category, String imagePathURL) {
