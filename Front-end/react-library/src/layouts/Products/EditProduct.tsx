@@ -1,16 +1,122 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import ProductModel from '../../models/product';
 import { Category } from '../../Types/types';
 import CategoryModel from '../../models/category';
 
 interface RouteParams {
-  productId: string; // Define the type of productId
+  productId: string;
 }
+
+const Container = styled.div`
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #ffe6e6;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial, sans-serif';
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin: 10px;
+  }
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2em;
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FormGroup = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+  display: block;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  height: 120px;
+  resize: vertical;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+`;
+
+const Button = styled.button`
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #784040;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s, transform 0.3s;
+
+  &:hover {
+    background-color: #9f5656;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #004494;
+  }
+`;
 
 const EditProduct: React.FC = () => {
   const history = useHistory();
-  const { productId } = useParams<RouteParams>(); // Specify the type of useParams
+  const { productId } = useParams<RouteParams>();
   const [product, setProduct] = useState<ProductModel | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,11 +175,10 @@ const EditProduct: React.FC = () => {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value;
     if (formData && categoryId) {
-      // Find the corresponding category object based on categoryId
       const selectedCategory: CategoryModel | undefined = categories.find(category => category.categoryId === parseInt(categoryId));
       setFormData((prevState: ProductModel | null) => ({
         ...prevState!,
-        category: selectedCategory || null, // Set selectedCategory or null if not found
+        category: selectedCategory || null,
       }));
     }
   };
@@ -82,7 +187,6 @@ const EditProduct: React.FC = () => {
     e.preventDefault();
     if (!formData) return;
   
-    // Extract category ID from formData
     const categoryId = formData.category ? formData.category.categoryId : null;
   
     try {
@@ -93,7 +197,7 @@ const EditProduct: React.FC = () => {
         },
         body: JSON.stringify({
           ...formData,
-          category: categoryId, // Include category ID in the request body
+          category: categoryId,
         }),
       });
       if (!response.ok) {
@@ -104,7 +208,6 @@ const EditProduct: React.FC = () => {
       console.error('Error editing product:', error);
     }
   };
-  
 
   if (loading) {
     return <div>Loading...</div>;
@@ -119,45 +222,44 @@ const EditProduct: React.FC = () => {
   }
 
   return (
-    <div className="container">
-      <h1>Edit Product</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Price:</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Quantity:</label>
-          <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Image URL:</label>
-          <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Category:</label>
-          <select name="category" value={formData.category ? formData.category.categoryId.toString() : ''} onChange={handleCategoryChange}>
+    <Container>
+      <Title>Edit Product</Title>
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label>Name:</Label>
+          <Input type="text" name="name" value={formData.name} onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Description:</Label>
+          <Textarea name="description" value={formData.description} onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Price:</Label>
+          <Input type="number" name="price" value={formData.price} onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Quantity:</Label>
+          <Input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Image URL:</Label>
+          <Input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label>Category:</Label>
+          <Select name="category" value={formData.category ? formData.category.categoryId.toString() : ''} onChange={handleCategoryChange}>
             <option value="">Select Category</option>
             {categories.map(category => (
               <option key={category.categoryId} value={category.categoryId.toString()}>
                 {category.categoryName}
               </option>
             ))}
-          </select>
-        </div>
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
+          </Select>
+        </FormGroup>
+        <Button type="submit">Save Changes</Button>
+      </Form>
+    </Container>
   );
-  
 };
 
 export default EditProduct;
