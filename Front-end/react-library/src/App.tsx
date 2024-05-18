@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ProductList from './layouts/Products/ListProducts';
+import Cart from './layouts/Cart/Cart';
 import AddProductForm from './layouts/Products/AddProduct';
 import AddCategoryForm from './layouts/AddCategory/AddCategory';
 import CreateAccount from './layouts/Auth/CreateAccount';
@@ -11,6 +12,7 @@ import HomePage from './layouts/HomePage/HomePage';
 import ProductDetails from './layouts/Products/ProductDetails';
 import EditProduct from './layouts/Products/EditProduct';
 import PrivateRoute from './layouts/Auth/PrivateRoute';
+
 
 export const App: React.FC = () => {
   return (
@@ -33,6 +35,7 @@ export const App: React.FC = () => {
             </Route>
             <PrivateRoute path='/home' component={HomePage} />
             <PrivateRoute path='/earrings' component={() => <ProductList category="earrings" />} />
+            <PrivateRoute path='/cart' component={Cart} />
             <PrivateRoute path='/bracelets' component={() => <ProductList category="bracelets" />} />
             <PrivateRoute path='/necklaces' component={() => <ProductList category="necklaces" />} />
             <PrivateRoute path='/rings' component={() => <ProductList category="rings" />} />

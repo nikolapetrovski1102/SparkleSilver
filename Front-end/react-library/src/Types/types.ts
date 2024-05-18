@@ -12,3 +12,8 @@ export interface Product {
     categoryId: number;
     categoryName: string;
   }
+
+  export interface Cart {
+    cartId: number;
+    products: Product;
+  }

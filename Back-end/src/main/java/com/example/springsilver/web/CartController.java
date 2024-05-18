@@ -4,7 +4,9 @@ import com.example.springsilver.config.CookieManager;
 import com.example.springsilver.models.*;
 import com.example.springsilver.models.dto.OrderItemDto;
 import com.example.springsilver.service.*;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
+@CrossOrigin(origins = "http://localhost:3001", allowCredentials = "true")
 public class CartController {
 
     private final CartService cartService;
@@ -75,6 +78,20 @@ public class CartController {
         else{
             return ResponseEntity.status(401).build();
         }
+    }
+
+    @GetMapping("/checkSession")
+    public ResponseEntity<String> checkSession (HttpServletRequest req){
+
+         String session = cookieManager.checkSession(req);
+
+         if (session.equals("Not authorized")){
+             return ResponseEntity.badRequest().build();
+         }
+         else{
+             return ResponseEntity.ok(session);
+         }
+
     }
 
     @PostMapping("/orderProduct/{cartId}")

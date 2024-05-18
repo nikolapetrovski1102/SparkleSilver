@@ -6,7 +6,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     // Clear the userId cookie
-    Cookies.remove('userId');
+    Cookies.remove('session');
     // Redirect to the login page
     history.push('/login');
   };

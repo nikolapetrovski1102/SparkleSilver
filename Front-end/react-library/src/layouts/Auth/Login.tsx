@@ -11,7 +11,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     // Check if the user is already logged in
-    if (Cookies.get('userId')) {
+    if (Cookies.get('session')) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -31,10 +31,12 @@ const Login: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const userId = data.userId; // Assuming the response JSON contains userId
-  
+        console.log(data);
+        
+        const userId = data; // Assuming the response JSON contains userId
+        
         // Set the cookie with the user ID
-        document.cookie = `userId=${userId}; path=/`;
+        document.cookie = `session=${userId}; path=/`;
 
         history.push('/home');
       } else if (response.status === 404) {

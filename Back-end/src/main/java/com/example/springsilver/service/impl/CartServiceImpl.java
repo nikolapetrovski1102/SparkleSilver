@@ -38,17 +38,23 @@ public class CartServiceImpl implements CartService {
     public List<Product> listAllProductInCart(Long userId) {
         Users user = userRepository.findUsersById(userId).orElseThrow(UserIdNotFoundException::new);
 
-        List<Cart> cart = shoppingCartRepository.findByUsers(user).stream().toList();
+        try{
+            List<Cart> cart = shoppingCartRepository.findByUsers(user).stream().toList();
+            List<Product> productList = new ArrayList<>();
 
-        List<Product> productList = new ArrayList<>();
-
-        if (!cart.isEmpty()) {
-            for (Cart item : cart) {
-                productList.add(item.getProduct());
+            if (!cart.isEmpty()) {
+                for (Cart item : cart) {
+                    productList.add(item.getProduct());
+                }
             }
+
+            return productList;
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return null;
         }
 
-        return productList;
 
     }
 

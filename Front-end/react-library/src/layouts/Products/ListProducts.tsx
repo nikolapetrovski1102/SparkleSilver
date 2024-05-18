@@ -9,6 +9,34 @@ const ProductList: React.FC<{ category: string }> = ({ category }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const addProductToCart = async (product: Product) => {
+    console.log(`Adding product to cart: ${product.productId}`);
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(`http://localhost:9091/api/cart/addToCart/${product.productId}?qty=1`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId: product.productId }),
+        credentials: 'include'
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to add product to cart: ${response.statusText}`);
+      }
+  
+      console.log(`Added to cart: ${product.name}`);
+    } catch (error: any) {
+      console.error('Error adding product to cart:', error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
@@ -92,7 +120,7 @@ const ProductList: React.FC<{ category: string }> = ({ category }) => {
                 <h3 style={{ padding: '15px 0px 0px 0px' }}>{product.price} MKD / {product.price * 0.016} EUR</h3>
 
                 <div className="d-flex justify-content-between align-items-center" style={{ padding: '15px 0px 0px 0px' }}>
-                  <button onClick={() => { }} className="btn btn-dark mr-2"><i className="fas fa-plus" style={{ color: 'white' }}></i> Додади во кошничка </button>
+                  <button onClick={() => { addProductToCart(product) }} className="btn btn-dark mr-2"><i className="fas fa-plus" style={{ color: 'white' }}></i> Додади во кошничка </button>
                   <a href={`/product/${product.productId}`} className="btn btn-pink" style={{ backgroundColor: 'pink', color: 'white' }}>Детали</a>
                 </div>
               </div>
