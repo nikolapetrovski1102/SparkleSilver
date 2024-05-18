@@ -111,10 +111,8 @@ const ProductList: React.FC<{ category: string }> = ({ category }) => {
             products.map((product) => (
               <div className="col-md-4 mb-3" key={product.productId}>
                 <div className="card">
-                  <div className="card-body">
-                    <a href="https://i.pinimg.com/originals/db/5f/6b/db5f6b8d9a1be71b9b1fb97e26810142.jpg" target="_blank" rel="noopener noreferrer">
-                      <img src="https://i.pinimg.com/originals/db/5f/6b/db5f6b8d9a1be71b9b1fb97e26810142.jpg" alt={product.name} className="rounded-img" style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />
-                    </a>
+                  <div className="card-body" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <img src={`http://localhost:9091/api${product.imagePathURL}`} alt={product.name} className="rounded-img" style={{ width: '100px', height: '130px', marginBottom: '10px' }} />
                   </div>
                 </div>
                 <h3 style={{ padding: '15px 0px 0px 0px' }}>{product.price} MKD / {product.price * 0.016} EUR</h3>
