@@ -6,17 +6,7 @@ interface Props {
   onRegister: (credentials: { username: string, password: string }) => void;
 }
 
-const CreateAccount: React.FC<Props> = ({ onLogin, onRegister }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleRegister = () => {
-    if (username.trim() === '' || password.trim() === '') {
-      alert('Please enter username and password.');
-      return;
-    }
-    onRegister({ username, password });
-  };
+const CreateAccount: React.FC<Props> = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -26,8 +16,6 @@ const CreateAccount: React.FC<Props> = ({ onLogin, onRegister }) => {
           <input
             type="text"
             placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
             style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px', backgroundColor: '#ffe6e6' }}
           />
         </div>
@@ -35,14 +23,11 @@ const CreateAccount: React.FC<Props> = ({ onLogin, onRegister }) => {
           <input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '10px', fontSize: '16px', backgroundColor: '#ffe6e6' }}
           />
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <button
-            onClick={handleRegister}
             style={{
               padding: '8px 16px', // Decreased padding
               backgroundColor: '#784040',

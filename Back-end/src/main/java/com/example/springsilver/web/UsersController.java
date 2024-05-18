@@ -30,7 +30,7 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Users> login (@RequestParam String usernameOrEmail, @RequestParam String password, HttpServletResponse resp, HttpServletRequest req){
+    public ResponseEntity<Long> login (@RequestParam String usernameOrEmail, @RequestParam String password, HttpServletResponse resp, HttpServletRequest req){
 
         String isAuthorized = cookieManager.checkSession(req);
 
@@ -39,7 +39,7 @@ public class UsersController {
 
             if (user != null) {
                 cookieManager.setCookie(resp, user.getId().toString());
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(user.getId());
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -110,6 +110,20 @@ public class UsersController {
         }
         catch (Exception ex){
             return ResponseEntity.internalServerError().build();
+        }
+
+    }
+
+    @GetMapping("/checkSession")
+    public ResponseEntity<String> checkSession (HttpServletRequest req){
+
+        String session = cookieManager.checkSession(req);
+
+        if (session.equals("Not authorized")){
+            return ResponseEntity.badRequest().build();
+        }
+        else{
+            return ResponseEntity.ok(session);
         }
 
     }

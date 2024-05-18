@@ -6,78 +6,41 @@ import AddProductForm from './layouts/Products/AddProduct';
 import AddCategoryForm from './layouts/AddCategory/AddCategory';
 import CreateAccount from './layouts/Auth/CreateAccount';
 import Login from './layouts/Auth/Login';
-import Profile from './layouts/User/Profile'; // Assuming Profile component includes user info
+import Profile from './layouts/User/Profile';
 import HomePage from './layouts/HomePage/HomePage';
 import ProductDetails from './layouts/Products/ProductDetails';
 import EditProduct from './layouts/Products/EditProduct';
-
+import PrivateRoute from './layouts/Auth/PrivateRoute';
 
 export const App: React.FC = () => {
-  const user = {
-    username: 'john_doe',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    avatarUrl: 'https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745', // Provide your user's avatar URL
-  };
-
-  // Define the onRegister function
-  const handleRegister = (credentials: { username: string, password: string }) => {
-    // Your registration logic here
-    console.log('Registering:', credentials);
-  };
-
-  // Define the onLogin function
-  const handleLogin = () => {
-    // Your login logic here
-    console.log('Logging in');
-  };
-
   return (
     <div className="App">
-      <Profile user={user} />
       <div className='d-flex flex-column min-vh-100 background-image'>
         <div className='flex-grow-1'>
           <Switch>
             <Route path='/' exact>
               <Redirect to='/home' />
             </Route>
-            <Route path='/home'>
-              <HomePage />
-            </Route>
-            <Route path='/earrings'>
-              <ProductList category="earrings" />
-            </Route>
-            <Route path='/bracelets'>
-              <ProductList category="bracelets" />
-            </Route>
-            <Route path='/necklaces'>
-              <ProductList category="necklaces" />
-            </Route>
-            <Route path='/rings'>
-              <ProductList category="rings" />
-            </Route>
-            <Route path='/add-product'>
-              <AddProductForm />
-            </Route>
-            <Route path='/add-category'>
-              <AddCategoryForm />
-            </Route>
             <Route path='/login'>
-              <Login onLogin={handleLogin}/> {/* Pass onLogin function */}
+              <Login />
             </Route>
             <Route path='/create-account'>
-              <CreateAccount onRegister={handleRegister} onLogin={handleLogin}/> {/* Pass onRegister and onLogin functions */}
+              <CreateAccount onLogin={function (credentials: { username: string; password: string; }): void {
+                throw new Error('Function not implemented.');
+              } } onRegister={function (credentials: { username: string; password: string; }): void {
+                throw new Error('Function not implemented.');
+              } } />
             </Route>
-            <Route path='/profile'>
-              <Profile user={user} /> {/* Render Profile component when URL matches '/profile' */}
-            </Route>
-            <Route path='/product/:productId'> {/* Define route for ProductDetails with productId parameter */}
-              <ProductDetails />
-            </Route>
-            <Route path='/edit/:productId'> {/* Define route for ProductDetails with productId parameter */}
-              <EditProduct />
-            </Route>
+            <PrivateRoute path='/home' component={HomePage} />
+            <PrivateRoute path='/earrings' component={() => <ProductList category="earrings" />} />
+            <PrivateRoute path='/bracelets' component={() => <ProductList category="bracelets" />} />
+            <PrivateRoute path='/necklaces' component={() => <ProductList category="necklaces" />} />
+            <PrivateRoute path='/rings' component={() => <ProductList category="rings" />} />
+            <PrivateRoute path='/add-product' component={AddProductForm} />
+            <PrivateRoute path='/add-category' component={AddCategoryForm} />
+            <PrivateRoute path='/profile' component={Profile} />
+            <PrivateRoute path='/product/:productId' component={ProductDetails} />
+            <PrivateRoute path='/edit/:productId' component={EditProduct} />
           </Switch>
         </div>
       </div>
