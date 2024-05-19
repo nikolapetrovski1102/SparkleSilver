@@ -27,12 +27,9 @@ export const App: React.FC = () => {
               <Login />
             </Route>
             <Route path='/create-account'>
-              <CreateAccount onLogin={function (credentials: { username: string; password: string; }): void {
-                throw new Error('Function not implemented.');
-              } } onRegister={function (credentials: { username: string; password: string; }): void {
-                throw new Error('Function not implemented.');
-              } } />
+              <CreateAccount/>
             </Route>
+            <PrivateRoute path='/product/:productId' component={ProductDetails} />
             <PrivateRoute path='/home' component={HomePage} />
             <PrivateRoute path='/earrings' component={() => <ProductList category="earrings" />} />
             <PrivateRoute path='/cart' component={Cart} />
