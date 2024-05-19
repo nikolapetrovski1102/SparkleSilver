@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { NavLink, useHistory } from 'react-router-dom';
+import { SpinnerLoading } from '../Utils/SpinnerLoading';
 
 const CreateAccount: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -10,6 +12,7 @@ const CreateAccount: React.FC = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // State to track loading
 
   const history = useHistory();
 
@@ -23,6 +26,8 @@ const CreateAccount: React.FC = () => {
       setMessage("Please upload an image.");
       return;
     }
+
+    setLoading(true); // Set loading to true while waiting for registration
 
     const uploadedFilePath = await uploadImage();
     if (uploadedFilePath) {
@@ -58,6 +63,8 @@ const CreateAccount: React.FC = () => {
       } catch (error) {
         console.error('Error during registration:', error);
         setMessage('Registration failed. Please try again.');
+      } finally {
+        setLoading(false); // Reset loading state
       }
     }
   };
@@ -157,6 +164,7 @@ const CreateAccount: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <button
             onClick={handleRegister}
+            disabled={loading} // Disable the button when loading
             style={{
               padding: '8px 16px',
               backgroundColor: '#784040',
@@ -168,14 +176,16 @@ const CreateAccount: React.FC = () => {
               width: '100%'
             }}
           >
-            Create Account
-          </button>
+            {loading ? <Spinner animation="border" variant="light" size="sm" /> : 'Create Account'}
+         
+            </button>
         </div>
         <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px' }}>
           Already have an account? <NavLink to="/login" style={{ textDecoration: 'none', color: '#784040' }}>Login here</NavLink>
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <div style={{ width: '50%' }}>
+            {/* This div can be used for additional content if needed */}
           </div>
         </div>
       </div>
