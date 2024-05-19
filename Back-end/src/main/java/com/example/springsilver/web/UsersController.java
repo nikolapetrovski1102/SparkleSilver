@@ -129,4 +129,18 @@ public class UsersController {
 
     }
 
+    @GetMapping("getUserRole/{id}")
+    public ResponseEntity<String> getUserRole (@PathVariable Long id, HttpServletRequest req){
+
+        Users user = userService.getUserById(id);
+
+        if (user != null){
+            return ResponseEntity.ok(user.getUserRoles().toString());
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
 }
