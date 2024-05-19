@@ -50,7 +50,7 @@ const CreateAccount: React.FC = () => {
 
         if (response.ok) {
           setMessage('Registration successful! Please check your email to verify your account.');
-          setTimeout(() => history.push('/login'), 500);
+          history.push('/login')
         } else {
           const errorData = await response.json();
           setMessage(`Registration failed: ${errorData.message}`);

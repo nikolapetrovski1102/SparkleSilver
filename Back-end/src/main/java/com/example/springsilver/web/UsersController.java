@@ -73,9 +73,9 @@ public class UsersController {
             Users savedUser = userService.register(newUser.getUsername(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(), newUser.getPassword(), newUser.getRepeatPassword(), newUser.getImagePathUrl());
 
             StringBuffer url = request.getRequestURL();
-            String verificationLink = url.toString() + "/verify/" + savedUser.getId();
+            String verificationLink =  "http://localhost:3000/register/verify/" + savedUser.getId();
 
-            String emailBody = "Please verify your profile by clicking the following <a href='" + verificationLink + "'>link</a>";
+            String emailBody = "Please verify your profile by clicking the following <a href='" + verificationLink + "'";
 
             emailer.sendEmail(newUser.getEmail(), "Please verify your profile", emailBody);
 

@@ -12,6 +12,7 @@ import HomePage from './layouts/HomePage/HomePage';
 import ProductDetails from './layouts/Products/ProductDetails';
 import EditProduct from './layouts/Products/EditProduct';
 import PrivateRoute from './layouts/Auth/PrivateRoute';
+import UserRegistrationVerification from './layouts/Auth/UserRegistrationVerification';
 
 
 export const App: React.FC = () => {
@@ -29,6 +30,9 @@ export const App: React.FC = () => {
             <Route path='/create-account'>
               <CreateAccount/>
             </Route>
+            <Route path="/register/verify/:userId">
+          <UserRegistrationVerification />
+        </Route>
             <PrivateRoute path='/product/:productId' component={ProductDetails} />
             <PrivateRoute path='/home' component={HomePage} />
             <PrivateRoute path='/earrings' component={() => <ProductList category="earrings" />} />
