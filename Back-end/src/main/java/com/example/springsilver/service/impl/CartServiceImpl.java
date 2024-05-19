@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Product> listAllProductInCart(Long userId) {
+    public List<Cart> listAllProductInCart(Long userId) {
         Users user = userRepository.findUsersById(userId).orElseThrow(UserIdNotFoundException::new);
 
         try{
@@ -48,7 +48,7 @@ public class CartServiceImpl implements CartService {
                 }
             }
 
-            return productList;
+            return cart;
         }
         catch (Exception ex){
             System.out.println(ex.getMessage());

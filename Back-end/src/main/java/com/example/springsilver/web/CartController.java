@@ -4,9 +4,7 @@ import com.example.springsilver.config.CookieManager;
 import com.example.springsilver.models.*;
 import com.example.springsilver.models.dto.OrderItemDto;
 import com.example.springsilver.service.*;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,18 +22,20 @@ public class CartController {
     private final PaymentService paymentService;
     private final ShippingService shippingService;
     private final OrdersService ordersService;
+    private final ProductService productService;
 
-    public CartController(CartService cartService, CookieManager cookieManager, OrderItemService orderItemService, PaymentService paymentService, ShippingService shippingService, OrdersService ordersService) {
+    public CartController(CartService cartService, CookieManager cookieManager, OrderItemService orderItemService, PaymentService paymentService, ShippingService shippingService, OrdersService ordersService, ProductService productService) {
         this.cartService = cartService;
         this.cookieManager = cookieManager;
         this.orderItemService = orderItemService;
         this.paymentService = paymentService;
         this.shippingService = shippingService;
         this.ordersService = ordersService;
+        this.productService = productService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> productsInCart (HttpServletRequest req){
+    public ResponseEntity<List<Cart>> productsInCart (HttpServletRequest req){
 
         String userId = cookieManager.checkSession(req);
 
@@ -107,7 +107,33 @@ public class CartController {
         ordersService.save(orders);
         OrderItem orderItem = new OrderItem(cartProduct.getQuantity(), cartProduct.getProduct().getPrice(), cartProduct.getProduct(), orders);
 
+        Product product = cartProduct.getProduct();
+        product.setQuantity(product.getQuantity() - 1);
+
+        productService.save(product);
+
+        removeFromCart(cartId);
+
         return ResponseEntity.ok(orderItemService.save(orderItem));
+
+    }
+
+    @PostMapping("/buyAll")
+    public ResponseEntity<?> orderProduct (@RequestBody OrderItemDto itemDto, HttpServletRequest req) {
+
+        List<Cart> cartList = productsInCart(req).getBody();
+
+        try {
+            assert cartList != null;
+            for (Cart cartItem : cartList) {
+                orderProduct(cartItem.getId(), itemDto);
+            }
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
 
     }
 

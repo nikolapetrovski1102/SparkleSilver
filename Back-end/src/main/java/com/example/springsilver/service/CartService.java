@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface CartService {
 
-    List<Product> listAllProductInCart(Long cartId);
+    List<Cart> listAllProductInCart(Long cartId);
     Cart addToCart(Long id, Integer qty, Long userId);
     void removeFromCart (Long cartId);
     Cart getProduct (Long cartId);

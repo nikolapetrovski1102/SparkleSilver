@@ -18,5 +18,5 @@ public interface ProductService {
     Optional<Product> edit(Long id,String name,String description, float price, Long categoryId, Long quantity);
     Optional<Product> edit(Long id,ProductDto productDto);
     void deleteById(Long id);
-
+    void save (Product product);
 }

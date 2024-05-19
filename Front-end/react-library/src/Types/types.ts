@@ -13,7 +13,7 @@ export interface Product {
     categoryName: string;
   }
 
-  export interface Cart {
-    cartId: number;
-    products: Product;
+  export interface CartModel {
+    id: number;
+    product: Product;
   }

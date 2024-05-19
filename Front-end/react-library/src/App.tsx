@@ -13,6 +13,7 @@ import ProductDetails from './layouts/Products/ProductDetails';
 import EditProduct from './layouts/Products/EditProduct';
 import PrivateRoute from './layouts/Auth/PrivateRoute';
 import UserRegistrationVerification from './layouts/Auth/UserRegistrationVerification';
+import Payment from './layouts/Cart/Payment';
 
 
 export const App: React.FC = () => {
@@ -37,6 +38,7 @@ export const App: React.FC = () => {
             <PrivateRoute path='/home' component={HomePage} />
             <PrivateRoute path='/earrings' component={() => <ProductList category="earrings" />} />
             <PrivateRoute path='/cart' component={Cart} />
+            <PrivateRoute path='/payment/:cart/:price' component={Payment} />
             <PrivateRoute path='/bracelets' component={() => <ProductList category="bracelets" />} />
             <PrivateRoute path='/necklaces' component={() => <ProductList category="necklaces" />} />
             <PrivateRoute path='/rings' component={() => <ProductList category="rings" />} />
