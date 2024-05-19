@@ -112,7 +112,7 @@ const ProductList: React.FC<{ category: string }> = ({ category }) => {
               <div className="col-md-4 mb-3" key={product.productId}>
                 <div className="card">
                   <div className="card-body" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <img src={`http://localhost:9091/api${product.imagePathURL}`} alt={product.name} className="rounded-img" style={{ width: '100px', height: '130px', marginBottom: '10px' }} />
+                    <img src={`http://localhost:9091/api${product.imagePathURL}`} alt={product.name} className="rounded-img" style={{ width: '160px', height: '190px', marginBottom: '10px' }} />
                   </div>
                 </div>
                 <h3 style={{ padding: '15px 0px 0px 0px' }}>{product.price} MKD / {product.price * 0.016} EUR</h3>
