@@ -114,6 +114,24 @@ const Button = styled.button`
   }
 `;
 
+const SaveButton = styled(Button)`
+  background-color: #784040;
+
+  &:hover {
+    background-color: #9f5656;
+  }
+`;
+
+const DeleteButton = styled(Button)`
+  background-color: #a94442;
+  margin-top: 16px; // Adds spacing between save and delete buttons
+
+  &:hover {
+    background-color: #d9534f;
+  }
+`;
+
+
 const EditProduct: React.FC = () => {
   const history = useHistory();
   const { productId } = useParams<RouteParams>();
@@ -182,6 +200,22 @@ const EditProduct: React.FC = () => {
       }));
     }
   };
+  const handleDelete = async () => {
+  if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+  try {
+    const response = await fetch(`http://localhost:9091/api/products/delete/${productId}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete product');
+    }
+    history.push('/home'); // Redirect user after deletion
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -256,7 +290,8 @@ const EditProduct: React.FC = () => {
             ))}
           </Select>
         </FormGroup>
-        <Button type="submit">Save Changes</Button>
+        <SaveButton type="submit">Save Changes</SaveButton>
+        <DeleteButton type="button" onClick={handleDelete}>Delete Product</DeleteButton>
       </Form>
     </Container>
   );
