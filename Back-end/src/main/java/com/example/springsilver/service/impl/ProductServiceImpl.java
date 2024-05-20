@@ -69,6 +69,8 @@ public class ProductServiceImpl implements ProductService {
 
         product.setPrice(price);
         product.setName(name);
+        product.setDescription(description);
+        product.setQuantity(quantity);
 
         Category category=this.categoryRepository.findById(categoryId).orElseThrow(()->new CategoryNotFoundException(categoryId));
         product.setCategory(category);
