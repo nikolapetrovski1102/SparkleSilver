@@ -120,7 +120,7 @@ const ProductDetails: React.FC = () => {
           <ProductDescription>{product.description}</ProductDescription>
           <ProductDetail>
             <Label>Price:</Label>
-            <Value>${product.price}</Value>
+            <Value>{product.price}MKD</Value>
           </ProductDetail>
           <ProductDetail>
             <Label>Quantity:</Label>

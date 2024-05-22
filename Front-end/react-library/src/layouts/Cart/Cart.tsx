@@ -11,7 +11,7 @@ const Cart: React.FC = () => {
   
     useEffect(() => {
       const calculateTotalPrice = () => {
-        const total = cartItems.reduce((acc, product) => acc + product.product.price, 0);
+        const total = cartItems.reduce((acc, product) => acc + product.product?.price, 0);
         setTotalPrice(total);
       };
       calculateTotalPrice();
@@ -99,17 +99,17 @@ const Cart: React.FC = () => {
       {cartItems.length > 0 ? (
         <div className="row justify-content-center" style={{ padding: '10px 10px 20px 10px' }}>
           {cartItems.map((product) => (
-            <div className="col-md-4 mb-3" key={product.product.productId}>
-              <div className="card">
-                <div className="card-body">
-                  <a href={product.product.imagePathURL} target="_blank" rel="noopener noreferrer">
-                    <img src={`http://localhost:9091/api${product.product.imagePathURL}`} alt={product.product.name} className="rounded-img" style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />
+            <div className="col-md-4 mb-3" key={product.product?.productId}>
+              <div className="card" style={{ justifyContent: 'center' }}>
+                <div className="card-body" style={{justifyContent: 'center' }} >
+                  <a href={product.product?.imagePathURL} target="_blank" rel="noopener noreferrer">
+                    <img src={`http://localhost:9091/api${product.product?.imagePathURL}`} alt={product.product?.name} className="rounded-img" style={{ width: '140px', height: '190px', marginBottom: '10px', justifyContent: 'center' }} />
                   </a>
-                  <h3 style={{ padding: '15px 0px 0px 0px' }}>{product.product.price} MKD / {product.product.price * 0.016} EUR</h3>
+                  <h3 style={{ padding: '15px 0px 0px 0px' }}>{product.product?.price} MKD / {product.product?.price * 0.016} EUR</h3>
                   <div className="d-flex justify-content-between align-items-center" style={{ padding: '15px 0px 0px 0px' }}>
                     <button onClick={() => { removeProductFromCart(product.id) }} className="btn btn-dark mr-2"><i className="fas fa-minus" style={{ color: 'white' }}></i> Отстрани од кошничка</button>
-                    <a href={`/product/${product.product.productId}`} className="btn btn-pink" style={{ backgroundColor: 'pink', color: 'white' }}>Детали</a>
-                    <a href={`/payment/${encodeURIComponent(JSON.stringify(product))}/${product.product.price}`} className="btn btn-pink" style={{ backgroundColor: 'pink', color: 'white' }}>Купи</a>
+                    <a href={`/product/${product.product?.productId}`} className="btn btn-pink" style={{ backgroundColor: 'pink', color: 'white' }}>Детали</a>
+                    <a href={`/payment/${encodeURIComponent(JSON.stringify(product))}/${product.product?.price}`} className="btn btn-pink" style={{ backgroundColor: 'pink', color: 'white' }}>Купи</a>
                   </div>
                 </div>
               </div>
